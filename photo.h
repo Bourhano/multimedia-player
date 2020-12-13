@@ -6,7 +6,7 @@
 class Photo : public Multimedia
 {
 private:
-    float longitude, latitude;
+    float longitude{}, latitude{};
 public:
     /**
      * @brief Photo
@@ -18,7 +18,7 @@ public:
      * @param desc is the title of the Photo
      * @param path is the full path of the Photo
      */
-    Photo(string desc, string path){}
+    Photo(string desc, string path):Multimedia(desc, path){}
 
     /**
      * @brief Photo
@@ -27,16 +27,22 @@ public:
      * @param desc is the title of the Photo
      * @param path is the full path of the Photo
      */
-    Photo(float lon, float lat, string desc, string path){Multimedia(desc, path);longitude = lon; latitude = lat;}
+    Photo(float lon, float lat, string desc, string path):Multimedia(desc, path){longitude = lon; latitude = lat;}
 
     ~Photo(){std::cout<< "au revoir bonne image" << std::endl;}
 
     float getLongitude() const {return longitude;}
     float getLatitude() const {return latitude;}
-    virtual void print(ostream &outstream) const override {
+
+    void print(ostream &outstream) const override {
         Multimedia::print(outstream);
         outstream << "Longitude: " << longitude << std::endl <<
                      "Latitude: " << latitude << std::endl;
+    }
+
+    void play() const override{
+        string cmd = "imagej " + getPathName();// + " &";
+        system(cmd.c_str());
     }
 };
 #endif // PHOTO_H

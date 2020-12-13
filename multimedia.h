@@ -3,7 +3,9 @@
 
 #include <iostream>
 #include <string>
+//#include <bits/stdc++.h>
 using namespace std;
+
 
 class Multimedia
 {
@@ -69,7 +71,7 @@ public:
      * @brief play a virtual method to play the referenced multimedia
      * @param m the multimedia to play
      */
-    //virtual void play(Multimedia m);
+    virtual void play() const =0;
 
 };
 
