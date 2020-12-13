@@ -28,7 +28,7 @@ public:
     /**
      * @brief Multimedia::~Multimedia : class destructor, goodbye!
      */
-    ~Multimedia();
+    virtual ~Multimedia();
 
     /**
      * @brief Multimedia::getTitle
@@ -69,7 +69,8 @@ public:
      * @brief play a virtual method to play the referenced multimedia
      * @param m the multimedia to play
      */
-    virtual void play(Multimedia m);
+    //virtual void play(Multimedia m);
+
 };
 
 #endif // MULTIMEDIA_H

@@ -35,3 +35,4 @@ void Multimedia::print(ostream &outstream) const{
               << "\nPath: " << getPathName()
               << std::endl; //better than \n when multi-threading
 }
+
