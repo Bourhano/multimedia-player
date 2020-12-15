@@ -27,9 +27,12 @@ public:
      * @param desc is the title of the Photo
      * @param path is the full path of the Photo
      */
-    Photo(float lon, float lat, string desc, string path):Multimedia(desc, path){longitude = lon; latitude = lat;}
+    Photo(string desc, string path, float lon, float lat):Multimedia(desc, path){longitude = lon; latitude = lat;}
 
     ~Photo(){std::cout<< "au revoir bonne image" << std::endl;}
+
+    void setLongitude(float lon) {longitude = lon;}
+    void setLatitude(float lat) {latitude = lat;}
 
     float getLongitude() const {return longitude;}
     float getLatitude() const {return latitude;}
@@ -41,7 +44,7 @@ public:
     }
 
     void play() const override{
-        string cmd = "imagej " + getPathName();// + " &";
+        string cmd = "imagej " + getPathName() + " &";
         system(cmd.c_str());
     }
 };
