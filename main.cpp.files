@@ -1,5 +1,6 @@
 film.h
 group.h
+manager.h
 video.h
 photo.h
 multimedia.cpp

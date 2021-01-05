@@ -2,7 +2,7 @@
 // main.cpp
 // Created on 21/10/2018
 //
-#define MAIN_5
+#define MAIN_6
 
 #include "multimedia.h"
 #include "photo.h"
@@ -18,29 +18,78 @@
  * @param argv
  * @return 0
  */
+#ifdef MAIN_6
+int main(int argc, const char* argv[])
+{
+    // initialize things
+    MultimediaPtr p(new Photo());
+    MultimediaPtr v(new Video());
+    int *chaps = new int[3];
+    chaps[0] = 1, chaps[1] = 3, chaps[2] = 2;
+    MultimediaPtr f(new Film("my first vid", "./media/vid1.mp4", 5, 3, chaps));
+
+    Group *grp = new Group("first");
+    std::unique_ptr<Group> grp2(new Group("second"));
+
+    // output things to std::cout
+    std::cout << "Hello brave new world" << std::endl;
+
+    grp->print(std::cout);
+
+    std::cout << "\nNothing there..." << std::endl;
+
+    // implementation de la septieme etape, ajout des free et delete dans main pour eviteer les fuites.
+    grp->push_front(p);
+    grp->push_front(v);
+    grp->push_front(f);
+    grp2->push_front(f);
+    grp->pop_front();
+    grp->print(std::cout);
+
+    std::cout << "\nThat's all, for now!" << std::endl;
+
+    // terminaison propre
+    delete(grp);
+
+
+    return (0);
+}
+#endif
+
 #ifdef MAIN_5
 int main(int argc, const char* argv[])
 {
     // initialize things
-    Photo *p = new Photo();
+    Photo *p = new Photo(); // il faut tester qu'il n'est pas nul!!!
     Video *v = new Video();
     //int chaps[3] = new int[3](2, 1, 2);
     int *chaps = new int[3];
     chaps[0] = 1, chaps[1] = 3, chaps[2] = 2;
     Film  *f = new Film("my first vid", "./media/vid1.mp4", 5, 3, chaps);//new int[3] {2, 1, 2});
-    Group grp = new Group("first");
+    Group *grp = new Group("first");
+    Group *grp2 = new Group("second");
 
     // output things to std::cout
     std::cout << "Hello brave new world" << std::endl;
-    p->print(std::cout);
-    v->print(std::cout);
-    f->print(std::cout);
+
     grp->print(std::cout);
 
+    std::cout << "\nNothing there..." << std::endl;
+
     // implementation de la septieme etape, ajout des free et delete dans main pour eviteer les fuites.
+    grp->push_front(p);
+    grp->push_front(v);
+    grp->push_front(f);
+    grp->print(std::cout);
+
+    std::cout << "\nThat's all, for now!" << std::endl;
+
+    // terminaison propre
+    delete(grp);
     delete(v);
     delete(p);
     delete(f);
+
     return (0);
 }
 #endif

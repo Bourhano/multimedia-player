@@ -1,9 +1,13 @@
 #ifndef GROUP_H
 #define GROUP_H
 #include "multimedia.h"
+#include <memory>
 #include <list>
 
-class Group : public list<Multimedia> //: public Multimedia to inherit or not to inherit, that is the question
+typedef shared_ptr<Multimedia> MultimediaPtr;
+
+//class Group : public list<Multimedia *> //: public Multimedia to inherit or not to inherit, that is the question
+class Group : public list<MultimediaPtr>
 {
 private:
     int nbMedia{};
@@ -18,8 +22,8 @@ public:
     string getGroupName() const {return groupName;}
 
     void print(ostream &outstream) const{
-        for (Multimedia medium : this) {
-            medium.print(std::cout);
+        for (auto it = this->begin(); it != this->end(); it++) {
+            (*it)->print(outstream);
         }
     }
 };
