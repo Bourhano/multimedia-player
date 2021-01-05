@@ -10,7 +10,7 @@ typedef shared_ptr<Multimedia> MultimediaPtr;
 class Group : public list<MultimediaPtr>
 {
 private:
-    int nbMedia{};
+    //int nbMedia{};
     string groupName{};
 public:
     Group(const string name){
@@ -22,9 +22,11 @@ public:
     string getGroupName() const {return groupName;}
 
     void print(ostream &outstream) const{
+        outstream << "Here is the group:" << std::endl;
         for (auto it = this->begin(); it != this->end(); it++) {
             (*it)->print(outstream);
         }
+        outstream << "----------------------------" << std::endl;
     }
 };
 #endif // GROUP_H

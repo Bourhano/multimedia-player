@@ -7,6 +7,8 @@ class Photo : public Multimedia
 {
 private:
     float longitude{}, latitude{};
+    friend class Manager;
+
 public:
     /**
      * @brief Photo
