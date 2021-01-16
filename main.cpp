@@ -9,7 +9,7 @@
 #include "video.h"
 #include "film.h"
 #include "group.h"
-#include <map>
+#include "manager.h"
 
 /**
  * @brief main entry point of the program (executable)
@@ -23,41 +23,29 @@
 int main(int argc, const char* argv[])
 {
     // initialize things
-    MultimediaPtr p(new Photo());
-    MultimediaPtr v(new Video());
+    MultimediaPtr p(new Photo("my first pic", "./media/img1.jpg", 12.3, 3.7));
+    MultimediaPtr v(new Video("my first vid", "./media/vid1.mp4", 5));
     int *chaps = new int[3];
     chaps[0] = 1, chaps[1] = 3, chaps[2] = 2;
-    MultimediaPtr f(new Film("my first vid", "./media/vid1.mp4", 5, 3, chaps));
+    MultimediaPtr f(new Film("my first film", "./media/vid1.mp4", 5, 3, chaps));
 
-    Group *grp = new Group("first");
-    std::unique_ptr<Group> grp2(new Group("second"));
+    std::unique_ptr<Group> grp(new Group("firstGrp1"));
+    std::unique_ptr<Group> grp2(new Group("secondGrp2"));
 
-    map<string, MultimediaPtr> m;
-    m["hano"] = p;
-    m["atto"] = v;
-    auto it = m.find("hano");
-    if(it == m.end())
-        std::cout << "pas trouve" << std::endl;
-    else
-        std::cout << "id: " << it->second->getTitle() << std::endl;
+    grp->push_front(p);
+    grp->push_front(v);
+    grp->push_front(f);
+    grp2->push_front(f);
 
-//    // output things to std::cout
-//    std::cout << "Hello brave new world" << std::endl;
-//    grp->print(std::cout);
-//    std::cout << "\nNothing there..." << std::endl;
+    //begin tests
+    Manager *m = new Manager();
+    GroupPtr mediaGroup = m->addGroup("mediaGrp");
+    MultimediaPtr mov = m->addVideo("dogFilm", "./media/vid1.mp4", 5, "mediaGrp");
+    m->searchMultimedia("dogFilm", std::cout);
 
-//    // implementation de la septieme etape, ajout des free et delete dans main pour eviteer les fuites.
-//    grp->push_front(p);
-//    grp->push_front(v);
-//    grp->push_front(f);
-//    grp2->push_front(f);
-//    grp->pop_front();
-//    grp->print(std::cout);
-
-//    std::cout << "\nThat's all, for now!" << std::endl;
 
     // terminaison propre
-    delete(grp);
+    delete(m);
 
     return (0);
 }

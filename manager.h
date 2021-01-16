@@ -15,26 +15,61 @@ private:
 public:
     Manager(){}
 
-    ~Manager(){std::cout << "au revoir mon geant ordannanceur!" << groupName << "." << std::endl;}
+    ~Manager(){std::cout << "au revoir mon geant ordannanceur magistrale et magnifique!" << std::endl;}
 
     MultimediaPtr addPhoto(string desc, string path, float lon, float lat, string groupName){
-        MultimediaPtr p = new Photo(desc, path, lon, lat);
+        MultimediaPtr p(new Photo(desc, path, lon, lat));
         media[desc] = p;
-        groups[groupName] = p;
+        auto it = groups.find(groupName);
+        if(it == groups.end())
+            addGroup(groupName);
+        groups[groupName]->push_back(p);
         return p;
     }
     MultimediaPtr addVideo(string desc, string path, int duration, string groupName){
-        MultimediaPtr vid = new Video(desc, path, duration);
+        MultimediaPtr vid(new Video(desc, path, duration));
         media[desc] = vid;
-        groups[groupName] = vid;
+        auto it = groups.find(groupName);
+        if(it == groups.end())
+            addGroup(groupName);
+        groups[groupName]->push_back(vid);
         return vid;
     }
-    MultimediaPtr addFilm(string desc, string path, int duration, int *chaps, string groupName){
-        MultimediaPtr film = new Film(desc, path, duration, chaps);
+    MultimediaPtr addFilm(string desc, string path, int duration, int nbChaps, int *chaps, string groupName){
+        MultimediaPtr film(new Film(desc, path, duration, nbChaps, chaps));
         media[desc] = film;
-        groups[groupName] = film;
+        //check if group exists
+        auto it = groups.find(groupName);
+        if(it == groups.end())
+            addGroup(groupName);
+        groups[groupName]->push_back(film);
         return film;
     }
-}
+    GroupPtr addGroup(string name){
+        GroupPtr group(new Group(name));
+        groups[name] = group;
+        return group;
+    }
+    void searchGroup(string name, ostream &outstream){
+            auto it = groups.find(name);
+            if(it == groups.end())
+                outstream << "Le groupe " << name << " n'existe pas." << std::endl;
+            else
+            {
+                outstream << "Here is your requested group:" << std::endl;
+                it->second->print(outstream);
+            }
+    }
+    void searchMultimedia(string name, ostream &outstream){
+            auto it = media.find(name);
+            if(it == media.end())
+                outstream << "The multimedia named " << name << " doesn't exist." << std::endl;
+            else
+            {
+                outstream << "Here is your requested media:" << std::endl;
+                it->second->print(outstream);
+            }
+    }
+};
 
 #endif // MANAGER_H
