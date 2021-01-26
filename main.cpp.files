@@ -1,7 +1,12 @@
 Makefile
+client.cpp
+cppsocket.cpp
+cppsocket.h
 film.h
 group.h
 manager.h
+tcpserver.cpp
+tcpserver.h
 video.h
 photo.h
 multimedia.cpp

@@ -14,7 +14,7 @@ PROG = multimedia-player #myprog
 #
 # Fichiers sources (NE PAS METTRE les .h ni les .o seulement les .cpp)
 #
-SOURCES = multimedia.cpp main.cpp cppsocket.cpp tcperver.cpp
+SOURCES = multimedia.cpp main.cpp tcpserver.cpp cppsocket.cpp
 
 #
 # Fichiers objets (ne pas modifier sauf si l'extension n'est pas .cpp)

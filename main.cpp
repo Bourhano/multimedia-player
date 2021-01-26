@@ -2,7 +2,8 @@
 // main.cpp
 // Created on 21/10/2018
 //
-#define MAIN_8
+#define MAIN_9
+#define PORT 3331
 //#define LOW_SECURITY  // only define LOW_SECURITY with MAIN_7 or lower.
 
 #include "multimedia.h"
@@ -11,6 +12,10 @@
 #include "film.h"
 #include "group.h"
 #include "manager.h"
+#include "cppsocket.h"
+#include "tcpserver.h"
+
+using namespace cppu;
 
 /**
  * @brief main entry point of the program (executable)
@@ -20,6 +25,43 @@
  * @param argv
  * @return 0
  */
+#ifdef MAIN_9 //the one where we implement security with
+int main(int argc, const char* argv[])
+{
+    // create the TCP server
+    shared_ptr<TCPServer> server(new TCPServer());
+
+    map<string, void (Manager::*)(string, ostream&)> functions;
+    functions["play"] = &Manager::playMultimedia;
+
+    shared_ptr<Manager> m(new Manager());
+    GroupPtr mediaGroup = m->addGroup("mediaGrp");
+    MultimediaPtr v = m->addVideo("dogFilm", "./media/vid1.mp4", 5, "mediaGrp");
+    MultimediaPtr p = m->addPhoto("my first pic", "./media/img1.jpg", 12.3, 3.7, "mediaGroup");
+    int *chaps = new int[3]; chaps[0] = 1, chaps[1] = 3, chaps[2] = 2;
+    MultimediaPtr f = m->addFilm("my first film", "./media/vid1.mp4", 5, 3, chaps, "mediaGroup2");
+
+    m->searchMultimedia("dogFilm", cout);
+    m->playMultimedia("dogFilm", cout);
+
+    // the server calls this method on each request
+    server->setCallback(*m, &Manager::processRequest);
+
+    // start endless server loop
+    cout << "Starting Server on port " << PORT << endl;
+    int status = server->run(PORT);
+
+    // in case of error
+    if (status < 0) {
+        cerr << "Could not start Server on port " << PORT << endl;
+        return (1);
+    }
+
+
+    return (0);
+}
+#endif
+
 #ifdef MAIN_8 //the one where we implement security with
 int main(int argc, const char* argv[])
 {
