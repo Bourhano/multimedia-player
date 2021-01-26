@@ -9,7 +9,9 @@ private:
     float longitude{}, latitude{};
     friend class Manager;
 
+#ifdef LOW_SECURITY
 public:
+#endif
     /**
      * @brief Photo
      */
@@ -33,6 +35,12 @@ public:
 
     ~Photo(){std::cout<< "au revoir bonne image" << std::endl;}
 
+#ifndef LOW_SECURITY
+public:
+    friend class Manager;
+    friend void deletephoto(Photo *);
+#endif
+
     void setLongitude(float lon) {longitude = lon;}
     void setLatitude(float lat) {latitude = lat;}
 
@@ -50,4 +58,7 @@ public:
         system(cmd.c_str());
     }
 };
+void deletephoto(Photo *p){
+    delete p;
+}
 #endif // PHOTO_H

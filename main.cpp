@@ -2,7 +2,8 @@
 // main.cpp
 // Created on 21/10/2018
 //
-#define MAIN_7
+#define MAIN_8
+//#define LOW_SECURITY  // only define LOW_SECURITY with MAIN_7 or lower.
 
 #include "multimedia.h"
 #include "photo.h"
@@ -19,6 +20,28 @@
  * @param argv
  * @return 0
  */
+#ifdef MAIN_8 //the one where we implement security with
+int main(int argc, const char* argv[])
+{
+    //begin tests
+    Manager *m = new Manager();
+    GroupPtr mediaGroup = m->addGroup("mediaGrp");
+    MultimediaPtr v = m->addVideo("dogFilm", "./media/vid1.mp4", 5, "mediaGrp");
+    MultimediaPtr p = m->addPhoto("my first pic", "./media/img1.jpg", 12.3, 3.7, "mediaGroup");
+    int *chaps = new int[3]; chaps[0] = 1, chaps[1] = 3, chaps[2] = 2;
+    MultimediaPtr f = m->addFilm("my first film", "./media/vid1.mp4", 5, 3, chaps, "mediaGroup2");
+
+    m->searchMultimedia("dogFilm", std::cout);
+    m->playMultimedia("dogFilm", std::cout);
+
+    // terminaison propre
+    delete(m);
+
+    return (0);
+}
+#endif
+
+
 #ifdef MAIN_7
 int main(int argc, const char* argv[])
 {
@@ -42,7 +65,7 @@ int main(int argc, const char* argv[])
     GroupPtr mediaGroup = m->addGroup("mediaGrp");
     MultimediaPtr mov = m->addVideo("dogFilm", "./media/vid1.mp4", 5, "mediaGrp");
     m->searchMultimedia("dogFilm", std::cout);
-
+    m->playMultimedia("dogFilm", std::cout);
 
     // terminaison propre
     delete(m);

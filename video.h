@@ -7,7 +7,11 @@ class Video : public Multimedia
 {
 private:
     int duration{};
+
+#ifdef LOW_SECURITY
 public:
+#endif
+
     /**
      * @brief Trivial Video constructor
      */
@@ -18,6 +22,13 @@ public:
     Video(string desc, string path, int d):Multimedia(desc, path){duration = d;}
 
     ~Video(){std::cout<< "au revoir bon video" << std::endl;}
+
+#ifndef LOW_SECURITY
+public:
+    friend class Manager;
+    friend class Film;
+    friend void deletevideo(Video *);
+#endif
 
     void setDuration(int d) {duration = d;}
 
@@ -33,4 +44,8 @@ public:
         system(cmd.c_str());
     }
 };
+
+void deletevideo(Video *v){
+    delete v;
+}
 #endif // VIDEO_H

@@ -18,7 +18,7 @@ public:
     ~Manager(){std::cout << "au revoir mon geant ordannanceur magistrale et magnifique!" << std::endl;}
 
     MultimediaPtr addPhoto(string desc, string path, float lon, float lat, string groupName){
-        MultimediaPtr p(new Photo(desc, path, lon, lat));
+        MultimediaPtr p(new Photo(desc, path, lon, lat), deletephoto);
         media[desc] = p;
         auto it = groups.find(groupName);
         if(it == groups.end())
@@ -27,7 +27,7 @@ public:
         return p;
     }
     MultimediaPtr addVideo(string desc, string path, int duration, string groupName){
-        MultimediaPtr vid(new Video(desc, path, duration));
+        MultimediaPtr vid(new Video(desc, path, duration), deletevideo);
         media[desc] = vid;
         auto it = groups.find(groupName);
         if(it == groups.end())
@@ -36,7 +36,7 @@ public:
         return vid;
     }
     MultimediaPtr addFilm(string desc, string path, int duration, int nbChaps, int *chaps, string groupName){
-        MultimediaPtr film(new Film(desc, path, duration, nbChaps, chaps));
+        MultimediaPtr film(new Film(desc, path, duration, nbChaps, chaps), deletefilm);
         media[desc] = film;
         //check if group exists
         auto it = groups.find(groupName);
@@ -46,7 +46,7 @@ public:
         return film;
     }
     GroupPtr addGroup(string name){
-        GroupPtr group(new Group(name));
+        GroupPtr group(new Group(name), deletegroup);
         groups[name] = group;
         return group;
     }
@@ -70,6 +70,19 @@ public:
                 it->second->print(outstream);
             }
     }
+    void playMultimedia(string name, ostream &outstream){
+            auto it = media.find(name);
+            if(it == media.end())
+                outstream << "Unable to play " << name << ". The file was not found." << std::endl;
+            else
+            {
+                outstream << "Your requested media is being played." << std::endl;
+                it->second->play();
+            }
+    }
+
+    //TODO: void deleteMultimedia(string name);
+    //TODO: void deleteGroup(string groupName);
 };
 
 #endif // MANAGER_H

@@ -6,7 +6,11 @@ class Film : public Video
 {
 private:
     int chaptersNb{}, *chapters = nullptr;
+
+#ifdef LOW_SECURITY
 public:
+#endif
+
     /**
      * @brief Trivial Video constructor
      */
@@ -25,7 +29,11 @@ public:
         delete[] chapters;
         std::cout<< "au revoir bon video chapitre'" << std::endl;
     }
-
+#ifndef LOW_SECURITY
+public:
+    friend class Manager;
+    friend void deletefilm(Film *);
+#endif
     void setChaptersNb(int nb) {chaptersNb = nb;}
     void setChapters (int *chaps, int nb) {
         if (chapters)
@@ -52,5 +60,7 @@ public:
             outstream << "  Chapter " << i + 1 << ": " << chapters[i] << "s" << std::endl;
     }
 };
-
+void deletefilm(Film *f){
+    delete f;
+}
 #endif // FILM_H

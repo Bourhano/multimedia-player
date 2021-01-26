@@ -12,12 +12,22 @@ class Group : public list<MultimediaPtr>
 private:
     //int nbMedia{};
     string groupName{};
+
+#ifdef LOW_SECURITY
 public:
+#endif
+
     Group(const string name){
         groupName = name;
     }
 
     ~Group(){std::cout << "au revoir ma chouette groupe " << groupName << "." << std::endl;}
+
+#ifndef LOW_SECURITY
+public:
+    friend class Manager;
+    friend void deletegroup(Group *);
+#endif
 
     string getGroupName() const {return groupName;}
 
@@ -29,4 +39,8 @@ public:
         outstream << "----------------------------" << std::endl;
     }
 };
+
+void deletegroup(Group *g){
+    delete g;
+}
 #endif // GROUP_H
