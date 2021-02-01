@@ -40,6 +40,8 @@ int main(int argc, const char* argv[])
     MultimediaPtr p = m->addPhoto("my first pic", "./media/img1.jpg", 12.3, 3.7, "mediaGroup");
     int *chaps = new int[3]; chaps[0] = 1, chaps[1] = 3, chaps[2] = 2;
     MultimediaPtr f = m->addFilm("my first film", "./media/vid1.mp4", 5, 3, chaps, "mediaGroup2");
+    int status = 0;
+
 
     m->searchMultimedia("dogFilm", cout);
     m->playMultimedia("dogFilm", cout);
@@ -49,7 +51,8 @@ int main(int argc, const char* argv[])
 
     // start endless server loop
     cout << "Starting Server on port " << PORT << endl;
-    int status = server->run(PORT);
+    //Temporarily halt server
+    //status = server->run(PORT);
 
     // in case of error
     if (status < 0) {
