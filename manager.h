@@ -109,6 +109,10 @@ public:
         response = "OK: " + request;
         cerr << "response: " << response << endl;
 
+        if(request == "close")
+            cerr << "response: " << response << endl;
+            return False;
+
         // renvoyer false si on veut clore la connexion avec le client
         return true;
     }

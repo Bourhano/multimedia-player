@@ -39,6 +39,7 @@ public:
 
     // 1) pour decouper la requête:
     // on peut par exemple utiliser stringstream et getline()
+
     
     
     // 2) faire le traitement:

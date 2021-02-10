@@ -31,9 +31,6 @@ int main(int argc, const char* argv[])
     // create the TCP server
     shared_ptr<TCPServer> server(new TCPServer());
 
-    map<string, void (Manager::*)(string, ostream&)> functions;
-    functions["play"] = &Manager::playMultimedia;
-
     shared_ptr<Manager> m(new Manager());
     GroupPtr mediaGroup = m->addGroup("mediaGrp");
     MultimediaPtr v = m->addVideo("dogFilm", "./media/vid1.mp4", 5, "mediaGrp");
