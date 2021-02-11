@@ -1,7 +1,6 @@
 video.h
 Makefile
 client.cpp
-client.cpp
 cppsocket.cpp
 cppsocket.cpp
 cppsocket.h
@@ -18,7 +17,6 @@ media/vid1.mp4
 multimedia.cpp
 multimedia.h
 photo.h
-server.cpp
 tcpserver.cpp
 tcpserver.cpp
 tcpserver.h

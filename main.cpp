@@ -2,7 +2,7 @@
 // main.cpp
 // Created on 21/10/2018
 //
-#define MAIN_9
+#define MAIN_10
 #define PORT 3331
 //#define LOW_SECURITY  // only define LOW_SECURITY with MAIN_7 or lower.
 
@@ -25,6 +25,42 @@ using namespace cppu;
  * @param argv
  * @return 0
  */
+#ifdef MAIN_10 //the one where we implement security with
+int main(int argc, const char* argv[])
+{
+    // create the TCP server
+    shared_ptr<TCPServer> server(new TCPServer());
+
+    //populate the 'set-top box' with media
+    shared_ptr<Manager> m(new Manager());
+    GroupPtr mediaGroup = m->addGroup("mediaGrp");
+    MultimediaPtr v = m->addVideo("catVideo", "./media/vid1.mp4", 5, "mediaGrp");
+    MultimediaPtr p = m->addPhoto("dogPhoto", "./media/img1.jpg", 12.3, 3.7, "mediaGroup");
+    int *chaps = new int[3]; chaps[0] = 1, chaps[1] = 3, chaps[2] = 2;
+    MultimediaPtr f = m->addFilm("catFilm", "./media/vid1.mp4", 5, 3, chaps, "mediaGroup2");
+    int status = 0;
+
+    // the server calls this method on each request
+    server->setCallback(*m, &Manager::processRequest);
+
+    // start endless server loop guarded with try-catch clause
+    try
+      {
+        cout << "Starting Server on port " << PORT << endl;
+        status = server->run(PORT);
+        if (status < 0)
+            throw(runtime_error("Error launching server!"));
+      }
+      catch (exception& e)
+      {
+        cerr << "Could not start Server on port " << PORT << endl;
+        cerr << "Exception caught: " << e.what() << '\n';
+        return (1);
+      }
+    return (0);
+}
+#endif
+
 #ifdef MAIN_9 //the one where we implement security with
 int main(int argc, const char* argv[])
 {
