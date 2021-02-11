@@ -31,25 +31,25 @@ int main(int argc, const char* argv[])
     // create the TCP server
     shared_ptr<TCPServer> server(new TCPServer());
 
+    //populate the 'set-top box' with media
     shared_ptr<Manager> m(new Manager());
     GroupPtr mediaGroup = m->addGroup("mediaGrp");
-    MultimediaPtr v = m->addVideo("dogFilm", "./media/vid1.mp4", 5, "mediaGrp");
-    MultimediaPtr p = m->addPhoto("my first pic", "./media/img1.jpg", 12.3, 3.7, "mediaGroup");
+    MultimediaPtr v = m->addVideo("catVideo", "./media/vid1.mp4", 5, "mediaGrp");
+    MultimediaPtr p = m->addPhoto("dogPhoto", "./media/img1.jpg", 12.3, 3.7, "mediaGroup");
     int *chaps = new int[3]; chaps[0] = 1, chaps[1] = 3, chaps[2] = 2;
-    MultimediaPtr f = m->addFilm("my first film", "./media/vid1.mp4", 5, 3, chaps, "mediaGroup2");
+    MultimediaPtr f = m->addFilm("catFilm", "./media/vid1.mp4", 5, 3, chaps, "mediaGroup2");
     int status = 0;
 
 
-    m->searchMultimedia("dogFilm", cout);
-    m->playMultimedia("dogFilm", cout);
+    m->searchMultimedia("catFilm", cout);
+    //m->playMultimedia("dogFilm", cout);
 
     // the server calls this method on each request
     server->setCallback(*m, &Manager::processRequest);
 
     // start endless server loop
     cout << "Starting Server on port " << PORT << endl;
-    //Temporarily halt server
-    //status = server->run(PORT);
+    status = server->run(PORT);
 
     // in case of error
     if (status < 0) {

@@ -32,7 +32,7 @@ public:
     string getGroupName() const {return groupName;}
 
     void print(ostream &outstream) const{
-        outstream << "Here is the group:" << std::endl;
+        //outstream << "Here is the group:" << std::endl;
         for (auto it = this->begin(); it != this->end(); it++) {
             (*it)->print(outstream);
         }
