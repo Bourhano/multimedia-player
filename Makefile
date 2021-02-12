@@ -2,6 +2,7 @@
 #
 #  Exemple de Makefile
 #  Eric Lecolinet - Reda Dehak - Telecom ParisTech 2015
+#  Adapte par Bourhan Dernayka pour le projet de INF224
 #  INF224 - TP C++ - http://www.telecom-paristech.fr/~elc/inf224
 #
 ##########################################

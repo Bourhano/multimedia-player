@@ -34,11 +34,18 @@ public:
 
     float getDuration() const {return duration;}
 
+    /**
+     * @brief print: sends the Video description to the defined stream
+     * @param outstream: where to send the output
+     */
     void print(ostream &outstream) const override {
         Multimedia::print(outstream);
         outstream << "Duration: " << duration << std::endl;
     }
 
+    /**
+     * @brief play: calls the command to play the video
+     */
     void play() const override{
         string cmd = "mpv " + getPathName() + " &";
         system(cmd.c_str());

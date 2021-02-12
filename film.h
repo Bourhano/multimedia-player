@@ -53,6 +53,10 @@ public:
         return (t);
     }
 
+    /**
+     * @brief print outputs the Film description to the @outstream
+     * @param outstream
+     */
     void print(ostream &outstream) const override {
         Video::print(outstream);
         outstream << "Chapters: " << std::endl;
@@ -60,6 +64,7 @@ public:
             outstream << "  Chapter " << i + 1 << ": " << chapters[i] << "s" << std::endl;
     }
 };
+
 void deletefilm(Film *f){
     delete f;
 }

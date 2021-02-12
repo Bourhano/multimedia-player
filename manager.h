@@ -36,6 +36,15 @@ public:
 
     ~Manager(){std::cout << "au revoir mon geant ordannanceur magistrale et magnifique!" << std::endl;}
 
+    /**
+     * @brief addPhoto: creates a new Photo and adds it to a group
+     * @param desc
+     * @param path
+     * @param lon
+     * @param lat
+     * @param groupName
+     * @return pointer to the created media
+     */
     MultimediaPtr addPhoto(string desc, string path, float lon, float lat, string groupName){
         MultimediaPtr p(new Photo(desc, path, lon, lat), deletephoto);
         media[desc] = p;
@@ -46,6 +55,14 @@ public:
         return p;
     }
 
+    /**
+     * @brief addVideo: creates a new Video and adds it to a group
+     * @param desc
+     * @param path
+     * @param duration
+     * @param groupName
+     * @return pointer to the created media
+     */
     MultimediaPtr addVideo(string desc, string path, int duration, string groupName){
         MultimediaPtr vid(new Video(desc, path, duration), deletevideo);
         media[desc] = vid;
@@ -56,6 +73,16 @@ public:
         return vid;
     }
 
+    /**
+     * @brief addFilm: pointer to the created media
+     * @param desc
+     * @param path
+     * @param duration
+     * @param nbChaps
+     * @param chaps
+     * @param groupName
+     * @return pointer to the created Film
+     */
     MultimediaPtr addFilm(string desc, string path, int duration, int nbChaps, int *chaps, string groupName){
         MultimediaPtr film(new Film(desc, path, duration, nbChaps, chaps), deletefilm);
         media[desc] = film;
@@ -67,12 +94,22 @@ public:
         return film;
     }
 
+    /**
+     * @brief addGroup: creates a new empty group
+     * @param name
+     * @return pointer to the created group
+     */
     GroupPtr addGroup(string name){
         GroupPtr group(new Group(name), deletegroup);
         groups[name] = group;
         return group;
     }
 
+    /**
+     * @brief searchGroup: searches for the group named @name and outputs its description to @outstream
+     * @param name
+     * @param outstream
+     */
     void searchGroup(string name, ostream &outstream){
         auto it = groups.find(name);
         if(it == groups.end())
@@ -84,6 +121,11 @@ public:
         }
     }
 
+    /**
+     * @brief listGroups: outputs all available groups to @outstream
+     * @param none: ignored param to fit the functions model
+     * @param outstream
+     */
     void listGroups(string none, ostream &outstream){
         outstream << "Here are the available groups with their content:" << std::endl;
         for (auto it = groups.begin(); it != groups.end(); ++it)
@@ -93,6 +135,11 @@ public:
         }
     }
 
+    /**
+     * @brief searchMultimedia: searches for the media file of any type in the current manager
+     * @param name to find
+     * @param outstream
+     */
     void searchMultimedia(string name, ostream &outstream){
         auto it = media.find(name);
         if(it == media.end())
@@ -103,6 +150,7 @@ public:
             it->second->print(outstream);
         }
     }
+
     /**
      * @brief plays the requested multimedia
      * @param name: the name of the requested multimedia element.

@@ -25,7 +25,7 @@ using namespace cppu;
  * @param argv
  * @return 0
  */
-#ifdef MAIN_10 //the one where we implement security with
+#ifdef MAIN_10
 int main(int argc, const char* argv[])
 {
     // create the TCP server
@@ -61,7 +61,7 @@ int main(int argc, const char* argv[])
 }
 #endif
 
-#ifdef MAIN_9 //the one where we implement security with
+#ifdef MAIN_9
 int main(int argc, const char* argv[])
 {
     // create the TCP server
